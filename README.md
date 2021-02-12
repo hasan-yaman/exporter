@@ -1,6 +1,6 @@
 # Exporter
 
-Exporter is a simple package that helps to export Jupyter notebook files as a Python script.
+Exporter is a simple package that helps to export Jupyter notebooks as a Python script.
 
 # Installation
 

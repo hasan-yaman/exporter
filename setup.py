@@ -2,9 +2,7 @@ from setuptools import setup, find_packages
 import pathlib
 
 here = pathlib.Path(__file__).parent.resolve()
-
 long_description = (here / 'README.md').read_text(encoding='utf-8')
-requirements = (here / "requirements.txt").read_text().split("\n")
 
 setup(
     name="exporter",
@@ -23,7 +21,9 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     python_requires=">=3.6",
-    install_requires=requirements
+    install_requires=[
+        'nbformat'
+    ]
 )
 
 #  TODO: Read install_requires from txt file

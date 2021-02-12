@@ -19,7 +19,7 @@ class TestExportJupyterNotebook(TestCase):
         #  shallow=False to compare contents of files.
         assert filecmp.cmp(self.test_output_path, self.output_path, shallow=False)
 
-    def test_export_jupyter_notebook_without_export_comments(self):
+    def test_export_jupyter_notebook_with_deleting_export_comments(self):
         # Export Jupyter Notebook
         export(self.without_export_comments_notebook_path, self.without_export_comments_test_output_path,
                delete_export_comments=True)
@@ -27,3 +27,5 @@ class TestExportJupyterNotebook(TestCase):
 
     def test_not_existing_notebook_path_gives_error(self):
         pass
+        # TODO: Handle exception
+        # TODO: Add test for no export comments

@@ -6,14 +6,15 @@ _pattern = r"^#\s*export\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
 
 
-def export(notebook_path: str, output_path: str, delete_export_comments: bool = True):
+def export(notebook_path: str, output_path: str, delete_export_comments: bool = False):
     """
     TODO: Add docstring.
     """
 
     notebook_path = Path(notebook_path)
     output_path = Path(output_path)
-    #  TODO: Check notebook_path exists
+    if not notebook_path.exists():
+        raise FileNotFoundError(notebook_path)
     # Read notebook
     with open(notebook_path, 'r', encoding='utf-8') as inp:
         notebook = nbformat.reads(inp.read(), as_version=4)
@@ -43,5 +44,4 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
                     out.write("\n\n")
 
     else:
-        #  TODO: Warning message?
-        print("No cell.")
+        print("No cell exported.")

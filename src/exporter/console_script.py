@@ -1,0 +1,19 @@
+import sys
+import argparse
+from .exporter import export
+
+# Prepare command line interface
+parser = argparse.ArgumentParser(description='Export Jupyter Notebooks as Python scripts.')
+parser.add_argument('notebook_path', type=str, help="Path of the Jupyter notebook.")
+parser.add_argument('output_path', type=str, help="Path of the output script.")
+parser.add_argument('--delete_export_comments', '-dc', action='store_true',
+                    help="If exists, then #export comments will be deleted from output script.")
+
+
+def run_export_console_script():
+    #  Parse command line arguments
+    args = parser.parse_args(args=sys.argv[1:])
+    try:
+        export(args.notebook_path, args.output_path, args.delete_export_comments)
+    except FileNotFoundError as e:
+        print(f"Notebook file not found. {e} not exists.")

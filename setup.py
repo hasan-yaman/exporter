@@ -23,7 +23,10 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         'nbformat'
-    ]
+    ],
+    entry_points={
+        'console_scripts': [
+            'exporter=exporter.console_script:run_export_console_script'
+        ]
+    }
 )
-
-#  TODO: Read install_requires from txt file

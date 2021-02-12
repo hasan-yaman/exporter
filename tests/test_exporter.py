@@ -1,5 +1,5 @@
 from unittest import TestCase
-from exporter.exporter import export
+from src.exporter import export
 import filecmp
 
 

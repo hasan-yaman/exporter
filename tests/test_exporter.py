@@ -1,6 +1,7 @@
 from unittest import TestCase
-from src.exporter import export
 import filecmp
+from pathlib import Path
+from src.exporter import export
 
 
 class TestExportJupyterNotebook(TestCase):
@@ -12,6 +13,11 @@ class TestExportJupyterNotebook(TestCase):
         self.without_export_comments_notebook_path = "data/input/02-TestNotebook.ipynb"
         self.without_export_comments_test_output_path = "data/output/02-TestNotebook-Test.py"
         self.without_export_comments_output_path = "data/output/02-TestNotebook.py"
+
+        self.not_existing_notebook_path = "data/input/NotExisyingNotebook.ipynb"
+
+        self.no_exported_cells_notebook_path = "data/input/03-TestNotebook.ipynb"
+        self.no_exported_cells_test_output_path = "data/output/03-TestNotebook-Test.py"
 
     def test_export_jupyter_notebook(self):
         #  Export Jupyter Notebook
@@ -26,6 +32,10 @@ class TestExportJupyterNotebook(TestCase):
         assert filecmp.cmp(self.without_export_comments_test_output_path, self.without_export_comments_output_path)
 
     def test_not_existing_notebook_path_gives_error(self):
-        pass
-        # TODO: Handle exception
-        # TODO: Add test for no export comments
+        # Should throw an exception
+        self.assertRaises(FileNotFoundError, export, self.not_existing_notebook_path, "")
+
+    def test_no_exported_cells(self):
+        export(self.no_exported_cells_notebook_path, self.no_exported_cells_test_output_path)
+        # No cell exported so test_output_path should be missing
+        assert not Path(self.no_exported_cells_test_output_path).exists()

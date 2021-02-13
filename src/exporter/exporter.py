@@ -8,11 +8,26 @@ _flags = re.IGNORECASE | re.MULTILINE
 
 def export(notebook_path: str, output_path: str, delete_export_comments: bool = False):
     """
-    TODO: Add docstring.
+    Export cells to Python script.
+
+    Parameters
+    ----------
+    notebook_path: str
+                    Path of the notebook that contains cells to be exported.
+    output_path: str
+                    Path of the Python script cells will be exported. Note that if the script is existed, export()
+                    will override it. If not existed, it will create the file.
+    delete_export_comments: bool
+                    Whether keep the '#export' or '# export' comments in the output file.
+
+    Returns
+    ------
+    None
     """
 
     notebook_path = Path(notebook_path)
     output_path = Path(output_path)
+    # Check whether the notebook exists or not.
     if not notebook_path.exists():
         raise FileNotFoundError(notebook_path)
     # Read notebook
@@ -42,6 +57,5 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
                 else:
                     # Put double new line between different cells.
                     out.write("\n\n")
-
     else:
         print("No cell exported.")

@@ -11,6 +11,10 @@ parser.add_argument('--delete_export_comments', '-dc', action='store_true',
 
 
 def run_export_console_script():
+    """
+    Run export() function from command line.
+    """
+
     #  Parse command line arguments
     args = parser.parse_args(args=sys.argv[1:])
     try:

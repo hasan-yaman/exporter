@@ -1,21 +1,36 @@
 # exporter
 
 exporter is a simple package that helps to export Jupyter notebooks as a Python script.
+Add **#export** or **# export** comments anywhere in the notebook cell you want to export as a Python script.Cells in 
+the same notebook will be exported to same Python script.
 
-- Single cell
-- Without any artifacts
+Best part of the exporter, it will not create any artifacts when you export cells.
+
 
 # Installation
 
-...
+```
+pip install exporter
+```
 
-- Check pypi for other versions
+Check [PyPI](https://pypi.org/project/exporter/) for all the versions available.
 
 # Usage
 
-...
-- Add #export to cell
-- Command line interface
-- Function
+1. Add **#export** or **# export** comments to cells you want to export.
+2. 
+    1. Option 1: Use command line.
+      ```
+      exporter notebook_path.ipynb output_path.py
+      ```
+      For all the options:
+      ```
+      exporter --help
+      ```
+    2. Option 2: Use Python function.
+      ```python
+      from exporter import export
+      export("notebook_path.ipynb","oytput_path.py")
+      ```
 
 

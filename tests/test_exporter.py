@@ -21,21 +21,32 @@ class TestExportJupyterNotebook(TestCase):
 
     def test_export_jupyter_notebook(self):
         #  Export Jupyter Notebook
-        export(self.notebook_path, self.test_output_path, delete_export_comments=False)
+        export(self.notebook_path, self.test_output_path,
+               delete_export_comments=False)
         #  shallow=False to compare contents of files.
-        assert filecmp.cmp(self.test_output_path, self.output_path, shallow=False)
+        assert filecmp.cmp(self.test_output_path,
+                           self.output_path, shallow=False)
 
     def test_export_jupyter_notebook_with_deleting_export_comments(self):
         # Export Jupyter Notebook
         export(self.without_export_comments_notebook_path, self.without_export_comments_test_output_path,
                delete_export_comments=True)
-        assert filecmp.cmp(self.without_export_comments_test_output_path, self.without_export_comments_output_path)
+        assert filecmp.cmp(self.without_export_comments_test_output_path,
+                           self.without_export_comments_output_path)
 
     def test_not_existing_notebook_path_gives_error(self):
         # Should throw an exception
-        self.assertRaises(FileNotFoundError, export, self.not_existing_notebook_path, "")
+        self.assertRaises(FileNotFoundError, export,
+                          self.not_existing_notebook_path, "")
 
     def test_no_exported_cells(self):
-        export(self.no_exported_cells_notebook_path, self.no_exported_cells_test_output_path)
+        export(self.no_exported_cells_notebook_path,
+               self.no_exported_cells_test_output_path)
         # No cell exported so test_output_path should be missing
         assert not Path(self.no_exported_cells_test_output_path).exists()
+
+    def test_custom_seperator(self):
+        output_path = self.test_output_path.replace(".py", "-CustomSep.py")
+        validate_path = self.output_path.replace(".py", "-CustomSep.py")
+        export(self.notebook_path, output_path, cell_seperator="\n\n# %%")
+        assert filecmp.cmp(output_path, validate_path)

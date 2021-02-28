@@ -1,6 +1,7 @@
 import nbformat
 import re
 from pathlib import Path
+from .helper import read_notebook
 
 _pattern = r"^#\s*export\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
@@ -32,17 +33,16 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
     if not notebook_path.exists():
         raise FileNotFoundError(notebook_path)
     # Read notebook
-    with open(notebook_path, 'r', encoding='utf-8') as inp:
-        notebook = nbformat.reads(inp.read(), as_version=4)
+    cells = read_notebook(notebook_path)
     # Iterate over cells
     sources = []
-    for cell in notebook['cells']:
+    for cell in cells:
         #  Find cells that will be exported
-        if cell['cell_type'] == 'code' and re.search(_pattern, cell['source'], _flags) is not None:
+        if re.search(_pattern, cell, _flags) is not None:
             if delete_export_comments:
-                source = re.sub(_pattern, '', cell['source'], flags=_flags)
+                source = re.sub(_pattern, '', cell, flags=_flags)
             else:
-                source = cell['source']
+                source = cell
             sources.append(source)
     if len(sources) > 0:
         #  Write source codes to output file
@@ -61,5 +61,3 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
                     out.write(cell_seperator)
     else:
         print("No cell exported.")
-
-

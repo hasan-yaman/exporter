@@ -1,5 +1,6 @@
 import re
 import io
+from typing import List
 from pathlib import Path
 from pygments import highlight
 from pygments.lexers import PythonLexer
@@ -9,6 +10,8 @@ import codecs
 import imgkit
 from src.exporter.monkey_patch import patched_open
 from src.exporter.exceptions import StyleNotFoundError
+from src.exporter.helper import read_script, read_notebook, is_notebook, is_script
+from src.exporter.exceptions import UnsupportedFileError
 
 #  Monkey patch
 codecs.open = patched_open
@@ -17,9 +20,26 @@ _image_export_block_end_pattern = r"^#\s*image-export-end\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
 
 
-def _read_script(script_path: str):
-    with open(script_path, 'r', encoding='utf-8') as file:
-        lines = file.readlines()
+def _parse_blocks(input_path: Path) -> List:
+    """
+    Read a file and returns list that each member contains code blocks that will be exported as image.
+
+    Parameters
+    ----------
+    input_path: Path
+        Path of the input file.
+    Returns
+    ------
+    exported_blocks: List
+        Return list that each member contains code block that is between image export comments.
+    """
+    if is_notebook(input_path):
+        lines = read_notebook(input_path)
+    elif is_script(input_path):
+        lines = read_script(input_path)
+    else:
+        raise UnsupportedFileError(input_path)
+
     exported_blocks = []
     block_started = False
     for line in lines:
@@ -36,22 +56,44 @@ def _read_script(script_path: str):
             continue
         if block_started:
             exported_blocks[-1] = exported_blocks[-1] + line.replace(u'\xa0', u' ')
-    print(exported_blocks)
     return exported_blocks
 
 
+def available_styles() -> List:
+    """
+    Returns all the available styles.
+
+    Returns:
+        Returns list of all the available styles.
+    """
+    return list(get_all_styles())
+
+
 def image_export(input_path: str, output_base_path: str, style: str):
+    """
+    Export code (Python script or Jupyter Notebook) as a image.
+
+        Parameters
+    ----------
+    input_path: str
+                    Path of the file that contains cells to be exported.
+    output_base_path: str
+                    Base path of the exported images. If two images are exported, then paths for them will
+                    be 'output_base_path_0.jpg' and 'output_base_path_1.jpg'
+    style: bool
+                    Style of the exported image. For the list of supported styles use 'available_styles()'
+                    function.
+    Returns
+    ------
+    None
+    """
     input_path = Path(input_path)
     if not input_path.exists():
         raise FileNotFoundError(input_path)
     #  Check code_format is valid
-    if style not in list(get_all_styles()):
+    if style not in available_styles():
         raise StyleNotFoundError(style)
-    if input_path.suffix == ".py":
-        blocks = _read_script(input_path)
-    else:
-        blocks = []
-    #  TODO: Refactor reading
+    blocks = _parse_blocks(input_path)
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)
 
@@ -60,5 +102,3 @@ def image_export(input_path: str, output_base_path: str, style: str):
         #  We are closing StringIO after reading it, therefore we need to recreate it.
         css_buffer = io.StringIO(formatter.get_style_defs('.highlight'))
         imgkit.from_string(highlighted_block, f"{output_base_path}-{i}.jpg", css=css_buffer)
-
-

@@ -14,7 +14,7 @@ class TestExportJupyterNotebook(TestCase):
         self.without_export_comments_test_output_path = "data/output/02-TestNotebook-Test.py"
         self.without_export_comments_output_path = "data/output/02-TestNotebook.py"
 
-        self.not_existing_notebook_path = "data/input/NotExisyingNotebook.ipynb"
+        self.not_existing_notebook_path = "data/input/NotExistingNotebook.ipynb"
 
         self.no_exported_cells_notebook_path = "data/input/03-TestNotebook.ipynb"
         self.no_exported_cells_test_output_path = "data/output/03-TestNotebook-Test.py"

@@ -19,10 +19,13 @@ class TestExportJupyterNotebook(TestCase):
         self.no_exported_cells_notebook_path = "data/input/03-TestNotebook.ipynb"
         self.no_exported_cells_test_output_path = "data/output/03-TestNotebook-Test.py"
 
+        self.custom_seperator_notebook_path = "data/input/01-TestNotebook.ipynb"
+        self.custom_seperator_test_output_path = "data/output/04-TestNotebook-Test.py"
+        self.custom_seperator_output_path = "data/output/04-TestNotebook.py"
+
     def test_export_jupyter_notebook(self):
         #  Export Jupyter Notebook
-        export(self.notebook_path, self.test_output_path,
-               delete_export_comments=False)
+        export(self.notebook_path, self.test_output_path, delete_export_comments=False)
         #  shallow=False to compare contents of files.
         assert filecmp.cmp(self.test_output_path,
                            self.output_path, shallow=False)
@@ -46,7 +49,5 @@ class TestExportJupyterNotebook(TestCase):
         assert not Path(self.no_exported_cells_test_output_path).exists()
 
     def test_custom_seperator(self):
-        output_path = self.test_output_path.replace(".py", "-CustomSep.py")
-        validate_path = self.output_path.replace(".py", "-CustomSep.py")
-        export(self.notebook_path, output_path, cell_seperator="\n\n# %%")
-        assert filecmp.cmp(output_path, validate_path)
+        export(self.notebook_path, self.custom_seperator_test_output_path, cell_seperator="\n\n# %%")
+        assert filecmp.cmp(self.custom_seperator_test_output_path, self.custom_seperator_output_path)

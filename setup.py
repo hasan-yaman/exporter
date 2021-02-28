@@ -4,7 +4,6 @@ import pathlib
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
-#  TODO: Update requirements
 setup(
     name="exporter",
     version="0.0.2",

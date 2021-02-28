@@ -8,13 +8,14 @@ from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import codecs
 import imgkit
-from src.exporter.monkey_patch import patched_open
-from src.exporter.exceptions import StyleNotFoundError
-from src.exporter.helper import read_script, read_notebook, is_notebook, is_script
-from src.exporter.exceptions import UnsupportedFileError
+from .monkey_patch import patched_open
+from .exceptions import StyleNotFoundError
+from .helper import read_script, read_notebook, is_notebook, is_script
+from .exceptions import UnsupportedFileError
 
 #  Monkey patch
 codecs.open = patched_open
+
 _image_export_block_start_pattern = r"^#\s*image-export-start\s*$"
 _image_export_block_end_pattern = r"^#\s*image-export-end\s*$"
 _flags = re.IGNORECASE | re.MULTILINE

@@ -1,4 +1,3 @@
-import nbformat
 import re
 from pathlib import Path
 from .helper import read_notebook

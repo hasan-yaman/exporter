@@ -70,3 +70,9 @@ to the start and end of the code block you want to export.
           print(available_styles())
           image_export("script.py","exported_images","colorful")
           ```
+
+# Examples
+emacs | friendly | native
+------------ | ------------- | -------------
+![emacs example 0](examples/example_0_emacs-0.jpg) | ![friendly example 0](examples/example_0_friendly-0.jpg)
+![emacs example 1](examples/example_1_emacs-0.jpg) | ![friendly example 0](examples/example_1_friendly-0.jpg)

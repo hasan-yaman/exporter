@@ -72,7 +72,25 @@ to the start and end of the code block you want to export.
           ```
 
 # Examples
-emacs | friendly | native
------------- | ------------- | -------------
-![emacs example 0](examples/example_0_emacs-0.jpg) | ![friendly example 0](examples/example_0_friendly-0.jpg)
-![emacs example 1](examples/example_1_emacs-0.jpg) | ![friendly example 0](examples/example_1_friendly-0.jpg)
+
+Some examples with different styles.
+
+emacs 
+------------ 
+![emacs example 0](examples/example_0_emacs-0.jpg) 
+![emacs example 1](examples/example_1_emacs-0.jpg)
+
+friendly
+------------ 
+![friendly example 0](examples/example_0_friendly-0.jpg) 
+![friendly example 1](examples/example_1_friendly-0.jpg)
+
+native 
+------------ 
+![native example 0](examples/example_0_native-0.jpg) 
+![native example 1](examples/example_1_native-0.jpg)
+
+vs 
+------------ 
+![vs example 0](examples/example_0_vs-0.jpg) 
+![vs example 1](examples/example_1_vs-0.jpg)

@@ -47,7 +47,8 @@ To work with image export functionality you need to install **wkhtmltopdf**.
           export("notebook_path.ipynb","oytput_path.py")
           ```
 
-# Export Code as a Image
+# Export Code as a Image
+
 1. Add **# image-export-start** and **# image-export-end** comments
 to start and end of the code block you want to export.
 2. List all the available styles for the image.

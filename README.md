@@ -4,7 +4,7 @@ exporter is a simple package that helps to export Jupyter notebooks as a Python 
 Add **#export** or **# export** comments anywhere in the notebook cell you want to export as a Python script. Cells in 
 the same notebook will be exported to the same Python script.
 
-You can also export codes from Jupyter notebooks and Python scripts as a image.
+You can also export codes from Jupyter notebooks and Python scripts as an image.
 
 
 # Installation
@@ -50,8 +50,8 @@ To work with image export functionality you need to install **wkhtmltopdf**.
 # Export Code as a Image
 
 1. Add **# image-export-start** and **# image-export-end** comments
-to start and end of the code block you want to export.
-2. List all the available styles for the image.
+to the start and end of the code block you want to export.
+2. List all the available styles.
     ```
     image-exporter --styles
     ```

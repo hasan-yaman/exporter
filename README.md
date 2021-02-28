@@ -53,7 +53,7 @@ To work with image export functionality you need to install **wkhtmltopdf**.
 to start and end of the code block you want to export.
 2. List all the available styles for the image.
     ```
-    image-exporter styles
+    image-exporter --styles
     ```
 3.
     1. Option 1: Use command line.

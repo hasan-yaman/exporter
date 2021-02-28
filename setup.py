@@ -28,7 +28,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'exporter=exporter.console_script:run_export_console_script'
+            'exporter=exporter.console_script:run_export_console_script',
+            'image-exporter=exporter.console_script:run_image_export_console_script'
         ]
     }
 )

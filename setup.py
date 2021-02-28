@@ -3,7 +3,8 @@ import pathlib
 
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
-# TODO: Update requirements
+
+#  TODO: Update requirements
 setup(
     name="exporter",
     version="0.0.2",
@@ -22,7 +23,9 @@ setup(
     package_dir={"": "src"},
     python_requires=">=3.6",
     install_requires=[
-        'nbformat'
+        'nbformat',
+        'imgkit',
+        'Pygments'
     ],
     entry_points={
         'console_scripts': [

@@ -19,7 +19,8 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
                     will override it. If not existed, it will create the file.
     delete_export_comments: bool
                     Whether keep the '#export' or '# export' comments in the output file.
-
+    cell_seperator: str
+                    String that seperates exported cells. Default to 2 newlines.
     Returns
     ------
     None
@@ -60,3 +61,5 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
                     out.write(cell_seperator)
     else:
         print("No cell exported.")
+
+

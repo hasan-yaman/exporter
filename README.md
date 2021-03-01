@@ -50,7 +50,8 @@ To work with image export functionality you need to install **wkhtmltopdf**.
 # Export Code as a Image
 
 1. Add **# image-export-start** and **# image-export-end** comments
-to the start and end of the code block you want to export.
+to the start and end of the code blocks you want to export. 
+(You can export more than one code block!)
 2. List all the available styles.
     ```
     image-exporter --styles
@@ -60,6 +61,10 @@ to the start and end of the code block you want to export.
           ```
           image-exporter script.py output_path style
           ```
+          or
+          ```
+          image-exporter notebook.ipynb output_path style
+          ```       
        For all the options:
           ```
           exporter --help

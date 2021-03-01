@@ -11,4 +11,12 @@ class UnsupportedFileError(Exception):
         self.file = file
 
     def __repr__(self):
-        return f"Extension of {self.file} is not supported. Support extensions are: .py and .ipynb"
+        return f"Extension of {self.file} is not supported. Supported extensions are: .py and .ipynb"
+
+
+class UnsupportedImageExtensionError(Exception):
+    def __init__(self, extension):
+        self.extension = extension
+
+    def __repr__(self):
+        return f"Image extension {self.extension} is not supported. Supported extensions are .jpeg, .jpg, .bmp and .png"

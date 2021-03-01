@@ -11,7 +11,7 @@ import imgkit
 from .monkey_patch import patched_open
 from .exceptions import StyleNotFoundError
 from .helper import read_script, read_notebook, is_notebook, is_script
-from .exceptions import UnsupportedFileError
+from .exceptions import UnsupportedFileError, UnsupportedImageExtensionError
 
 #  Monkey patch
 codecs.open = patched_open
@@ -19,6 +19,7 @@ codecs.open = patched_open
 _image_export_block_start_pattern = r"^#\s*image-export-start\s*$"
 _image_export_block_end_pattern = r"^#\s*image-export-end\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
+_supported_image_formats = [".jpeg", ".jpg", ".bmp", ".png"]
 
 
 def _parse_blocks(input_path: Path) -> List:
@@ -91,12 +92,14 @@ def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.
     None
     """
     input_path = Path(input_path)
+    output_path = Path(output_path)
     if not input_path.exists():
         raise FileNotFoundError(input_path)
     #  Check code_format is valid
     if style not in available_styles():
         raise StyleNotFoundError(style)
-    #  TODO: Check output format is valid
+    if output_path.suffix not in _supported_image_formats:
+        raise UnsupportedImageExtensionError(output_path.suffix)
     blocks = _parse_blocks(input_path)
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)
@@ -111,5 +114,5 @@ def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.
         highlighted_block = highlight(block, lexer, formatter)
         #  We are closing StringIO after reading it, therefore we need to recreate it.
         css_buffer = io.StringIO(formatter.get_style_defs('.highlight'))
-        output_path_formatted = [f"{output_path}" if len(blocks) == 1 else f"{i}_{output_path}"]
+        output_path_formatted = f"{output_path}" if len(blocks) == 1 else f"{i}_{output_path}"
         imgkit.from_string(highlighted_block, output_path_formatted, css=css_buffer, options=options)

@@ -2,7 +2,7 @@ import sys
 import argparse
 from .exporter import export
 from .image_exporter import image_export, available_styles
-from .exceptions import UnsupportedFileError
+from .exceptions import *
 
 # Prepare command line interface
 export_parser = argparse.ArgumentParser(description='Export Jupyter Notebooks as Python scripts.')
@@ -58,5 +58,9 @@ def run_image_export_console_script():
             image_export(args.input_path, args.output_path, args.style, args.zoom)
         except FileNotFoundError as e:
             print(f"File not found. {e} not exists.")
+        except StyleNotFoundError as e:
+            print(f"{e} not found in installed styles.")
         except UnsupportedFileError as e:
             print(f"Extension of {e} is not supported. Support extensions are: .py and .ipynb")
+        except UnsupportedImageExtensionError as e:
+            print(f"Image extension {e} is not supported. Supported extensions are .jpeg, .jpg, .bmp and .png")

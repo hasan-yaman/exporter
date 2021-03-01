@@ -98,8 +98,14 @@ def image_export(input_path: str, output_base_path: str, style: str):
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)
 
+    #  Options for imgkit
+    options = {
+        'quiet': '',  #  Do not show any output
+        'zoom': 3,  #  Zoom to increase quality of the image
+    }
+
     for i, block in enumerate(blocks):
         highlighted_block = highlight(block, lexer, formatter)
         #  We are closing StringIO after reading it, therefore we need to recreate it.
         css_buffer = io.StringIO(formatter.get_style_defs('.highlight'))
-        imgkit.from_string(highlighted_block, f"{output_base_path}-{i}.jpg", css=css_buffer)
+        imgkit.from_string(highlighted_block, f"{output_base_path}-{i}.jpeg", css=css_buffer, options=options)

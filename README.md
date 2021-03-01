@@ -58,7 +58,7 @@ to the start and end of the code block you want to export.
 3.
     1. Option 1: Use command line.
           ```
-          image-exporter script.py output_base_path style
+          image-exporter script.py output_path style
           ```
        For all the options:
           ```

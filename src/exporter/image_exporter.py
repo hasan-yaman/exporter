@@ -70,7 +70,7 @@ def available_styles() -> List:
     return list(get_all_styles())
 
 
-def image_export(input_path: str, output_base_path: str, style: str, zoom: float = 2.0):
+def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.0):
     """
     Export code (Python script or Jupyter Notebook) as a image.
 
@@ -78,9 +78,9 @@ def image_export(input_path: str, output_base_path: str, style: str, zoom: float
     ----------
     input_path: str
                     Path of the file that contains cells to be exported.
-    output_base_path: str
-                    Base path of the exported images. If two images are exported, then paths for them will
-                    be 'output_base_path_0.jpg' and 'output_base_path_1.jpg'
+    output_path: str
+                    Output path of the exported images. If two images are exported, then paths for them will
+                    be '0_output_path' and '1_output_path'
     style: bool
                     Style of the exported image. For the list of supported styles use 'available_styles()'
                     function.
@@ -96,6 +96,7 @@ def image_export(input_path: str, output_base_path: str, style: str, zoom: float
     #  Check code_format is valid
     if style not in available_styles():
         raise StyleNotFoundError(style)
+    #  TODO: Check output format is valid
     blocks = _parse_blocks(input_path)
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)
@@ -110,4 +111,5 @@ def image_export(input_path: str, output_base_path: str, style: str, zoom: float
         highlighted_block = highlight(block, lexer, formatter)
         #  We are closing StringIO after reading it, therefore we need to recreate it.
         css_buffer = io.StringIO(formatter.get_style_defs('.highlight'))
-        imgkit.from_string(highlighted_block, f"{output_base_path}-{i}.jpeg", css=css_buffer, options=options)
+        output_path_formatted = [f"{output_path}" if len(blocks) == 1 else f"{i}_{output_path}"]
+        imgkit.from_string(highlighted_block, output_path_formatted, css=css_buffer, options=options)

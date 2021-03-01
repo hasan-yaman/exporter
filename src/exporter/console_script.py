@@ -60,7 +60,5 @@ def run_image_export_console_script():
             print(f"File not found. {e} not exists.")
         except StyleNotFoundError as e:
             print(f"{e} not found in installed styles.")
-        except UnsupportedFileError as e:
-            print(f"Extension of {e} is not supported. Support extensions are: .py and .ipynb")
-        except UnsupportedImageExtensionError as e:
-            print(f"Image extension {e} is not supported. Supported extensions are .jpeg, .jpg, .bmp and .png")
+        except UnsupportedFileExtensionError as e:
+            print(f"Extension of {e} is not supported.")

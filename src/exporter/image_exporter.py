@@ -11,7 +11,8 @@ import imgkit
 from .monkey_patch import patched_open
 from .exceptions import StyleNotFoundError
 from .helper import read_script, read_notebook, is_notebook, is_script
-from .exceptions import UnsupportedFileError, UnsupportedImageExtensionError
+from .exceptions import UnsupportedFileExtensionError
+from .constants import _supported_image_formats, _supported_file_formats
 
 #  Monkey patch
 codecs.open = patched_open
@@ -19,7 +20,6 @@ codecs.open = patched_open
 _image_export_block_start_pattern = r"^#\s*image-export-start\s*$"
 _image_export_block_end_pattern = r"^#\s*image-export-end\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
-_supported_image_formats = [".jpeg", ".jpg", ".bmp", ".png"]
 
 
 def _parse_blocks(input_path: Path) -> List:
@@ -40,7 +40,7 @@ def _parse_blocks(input_path: Path) -> List:
     elif is_script(input_path):
         lines = read_script(input_path)
     else:
-        raise UnsupportedFileError(input_path)
+        raise UnsupportedFileExtensionError(input_path, _supported_file_formats)
 
     exported_blocks = []
     block_started = False
@@ -99,7 +99,7 @@ def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.
     if style not in available_styles():
         raise StyleNotFoundError(style)
     if output_path.suffix not in _supported_image_formats:
-        raise UnsupportedImageExtensionError(output_path.suffix)
+        raise UnsupportedFileExtensionError(output_path, _supported_image_formats)
     blocks = _parse_blocks(input_path)
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)

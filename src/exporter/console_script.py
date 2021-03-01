@@ -34,7 +34,8 @@ def run_export_console_script():
         export(args.notebook_path, args.output_path, args.delete_export_comments, args.cell_seperator)
     except FileNotFoundError as e:
         print(f"Notebook file not found. {e} not exists.")
-
+    except UnsupportedFileExtensionError as e:
+        print(f"Extension of {e} is not supported.")
 
 def run_image_export_console_script():
     """

@@ -6,7 +6,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name="exporter",
-    version="0.0.3",
+    version="0.0.4",
     author="Hasan Yaman",
     author_email="hasannyaman@gmail.com",
     description="exporter helps to export Jupyter notebooks as a Python script.",

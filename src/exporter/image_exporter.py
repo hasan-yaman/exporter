@@ -70,7 +70,7 @@ def available_styles() -> List:
     return list(get_all_styles())
 
 
-def image_export(input_path: str, output_base_path: str, style: str):
+def image_export(input_path: str, output_base_path: str, style: str, zoom: float = 2.0):
     """
     Export code (Python script or Jupyter Notebook) as a image.
 
@@ -84,6 +84,8 @@ def image_export(input_path: str, output_base_path: str, style: str):
     style: bool
                     Style of the exported image. For the list of supported styles use 'available_styles()'
                     function.
+    zoom: float
+                    Zoom factor for the output image.
     Returns
     ------
     None
@@ -101,7 +103,7 @@ def image_export(input_path: str, output_base_path: str, style: str):
     #  Options for imgkit
     options = {
         'quiet': '',  #  Do not show any output
-        'zoom': 3,  #  Zoom to increase quality of the image
+        'zoom': zoom,  #  Zoom to increase quality of the image
     }
 
     for i, block in enumerate(blocks):

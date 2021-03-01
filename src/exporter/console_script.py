@@ -15,8 +15,9 @@ export_parser.add_argument('--cell-seperator', '-cs', action='store', default="\
 
 image_export_parser = argparse.ArgumentParser(description="Export Python scripts or Jupyter Notebooks as an image.")
 image_export_parser.add_argument('input_path', nargs='?', type=str, help="Path of the input file.")
-image_export_parser.add_argument('output_base_path', nargs='?', type=str, help="Base path for the output images.")
-image_export_parser.add_argument('style', nargs='?', type=str, help="Style of the output images.")
+image_export_parser.add_argument('output_base_path', nargs='?', type=str, help="Base path for the output image.")
+image_export_parser.add_argument('style', nargs='?', type=str, help="Style of the output image.")
+image_export_parser.add_argument('--zoom', '-z', type=float, default=2.0, help="Zoom level of the output image.")
 image_export_parser.add_argument('--styles', '-s', action='store_true',
                                  help="List all the available styles.")
 

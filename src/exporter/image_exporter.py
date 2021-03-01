@@ -11,7 +11,8 @@ import imgkit
 from .monkey_patch import patched_open
 from .exceptions import StyleNotFoundError
 from .helper import read_script, read_notebook, is_notebook, is_script
-from .exceptions import UnsupportedFileError
+from .exceptions import UnsupportedFileExtensionError
+from .constants import _supported_image_formats, _supported_file_formats
 
 #  Monkey patch
 codecs.open = patched_open
@@ -39,7 +40,7 @@ def _parse_blocks(input_path: Path) -> List:
     elif is_script(input_path):
         lines = read_script(input_path)
     else:
-        raise UnsupportedFileError(input_path)
+        raise UnsupportedFileExtensionError(input_path, _supported_file_formats)
 
     exported_blocks = []
     block_started = False
@@ -70,7 +71,7 @@ def available_styles() -> List:
     return list(get_all_styles())
 
 
-def image_export(input_path: str, output_base_path: str, style: str):
+def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.0):
     """
     Export code (Python script or Jupyter Notebook) as a image.
 
@@ -78,28 +79,40 @@ def image_export(input_path: str, output_base_path: str, style: str):
     ----------
     input_path: str
                     Path of the file that contains cells to be exported.
-    output_base_path: str
-                    Base path of the exported images. If two images are exported, then paths for them will
-                    be 'output_base_path_0.jpg' and 'output_base_path_1.jpg'
+    output_path: str
+                    Output path of the exported images. If two images are exported, then paths for them will
+                    be '0_output_path' and '1_output_path'
     style: bool
                     Style of the exported image. For the list of supported styles use 'available_styles()'
                     function.
+    zoom: float
+                    Zoom factor for the output image.
     Returns
     ------
     None
     """
     input_path = Path(input_path)
+    output_path = Path(output_path)
     if not input_path.exists():
         raise FileNotFoundError(input_path)
-    #  Check code_format is valid
+    #  Check style is valid
     if style not in available_styles():
         raise StyleNotFoundError(style)
+    if output_path.suffix not in _supported_image_formats:
+        raise UnsupportedFileExtensionError(output_path, _supported_image_formats)
     blocks = _parse_blocks(input_path)
     lexer = PythonLexer()
     formatter = HtmlFormatter(style=style)
+
+    #  Options for imgkit
+    options = {
+        'quiet': '',  #  Do not show any output
+        'zoom': zoom,  #  Zoom level
+    }
 
     for i, block in enumerate(blocks):
         highlighted_block = highlight(block, lexer, formatter)
         #  We are closing StringIO after reading it, therefore we need to recreate it.
         css_buffer = io.StringIO(formatter.get_style_defs('.highlight'))
-        imgkit.from_string(highlighted_block, f"{output_base_path}-{i}.jpg", css=css_buffer)
+        output_path_formatted = f"{output_path}" if len(blocks) == 1 else f"{i}_{output_path}"
+        imgkit.from_string(highlighted_block, output_path_formatted, css=css_buffer, options=options)

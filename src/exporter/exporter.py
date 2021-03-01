@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
-from .helper import read_notebook
+from .helper import read_notebook, is_notebook, is_script
+from .exceptions import UnsupportedFileExtensionError
 
 _pattern = r"^#\s*export\s*$"
 _flags = re.IGNORECASE | re.MULTILINE
@@ -31,6 +32,10 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
     # Check whether the notebook exists or not.
     if not notebook_path.exists():
         raise FileNotFoundError(notebook_path)
+    if notebook_path.suffix != ".ipynb":
+        raise UnsupportedFileExtensionError(notebook_path, [".ipynb"])
+    if output_path.suffix != ".py":
+        raise UnsupportedFileExtensionError(output_path, [".py"])
     # Read notebook
     cells = read_notebook(notebook_path)
     # Iterate over cells

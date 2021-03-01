@@ -95,7 +95,7 @@ def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.
     output_path = Path(output_path)
     if not input_path.exists():
         raise FileNotFoundError(input_path)
-    #  Check code_format is valid
+    #  Check style is valid
     if style not in available_styles():
         raise StyleNotFoundError(style)
     if output_path.suffix not in _supported_image_formats:
@@ -107,7 +107,7 @@ def image_export(input_path: str, output_path: str, style: str, zoom: float = 2.
     #  Options for imgkit
     options = {
         'quiet': '',  #  Do not show any output
-        'zoom': zoom,  #  Zoom to increase quality of the image
+        'zoom': zoom,  #  Zoom level
     }
 
     for i, block in enumerate(blocks):

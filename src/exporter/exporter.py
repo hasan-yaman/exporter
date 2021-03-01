@@ -29,7 +29,6 @@ def export(notebook_path: str, output_path: str, delete_export_comments: bool = 
 
     notebook_path = Path(notebook_path)
     output_path = Path(output_path)
-    #  TODO: Check extension of input and output paths
     # Check whether the notebook exists or not.
     if not notebook_path.exists():
         raise FileNotFoundError(notebook_path)

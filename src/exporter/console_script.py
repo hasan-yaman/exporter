@@ -37,6 +37,7 @@ def run_export_console_script():
     except UnsupportedFileExtensionError as e:
         print(f"Extension of {e} is not supported.")
 
+
 def run_image_export_console_script():
     """
     Run image_export() or get_all_styles() functions from command line.

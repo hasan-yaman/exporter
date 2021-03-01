@@ -77,20 +77,20 @@ Some examples with different styles.
 
 emacs 
 ------------ 
-![emacs example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_emacs-0.jpg) 
-![emacs example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_emacs-0.jpg)
+![emacs example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_emacs.jpg) 
+![emacs example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_emacs.jpg)
 
 friendly
 ------------ 
-![friendly example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_friendly-0.jpg) 
-![friendly example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_friendly-0.jpg)
+![friendly example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_friendly.jpg) 
+![friendly example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_friendly.jpg)
 
 native 
 ------------ 
-![native example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_native-0.jpg) 
-![native example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_native-0.jpg)
+![native example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_native.jpg) 
+![native example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_native.jpg)
 
 vs 
 ------------ 
-![vs example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_vs-0.jpg) 
-![vs example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_vs-0.jpg)
+![vs example 0](https://github.com/hasan-yaman/exporter/raw/master/examples/example_0_vs.jpg) 
+![vs example 1](https://github.com/hasan-yaman/exporter/raw/master/examples/example_1_vs.jpg)
